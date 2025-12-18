@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">MobileAndroidJavaProject</string>
+
+    <!--  Frangment labels  -->
+    <!--    add everything related to the fragment labels -->
+    <string name="title_home">Home</string>
+    <string name="title_add">Add</string>
+    <string name="title_Done">Done</string>
+    <!--  Frangment labels  -->
+
+    <!--  ===============================================Separator===============================================  -->
+
+    <!--  Home Fragment Strings  -->
+    <!--    add everything related to the Home fragment in here -->
+    <!--  Home Fragment Strings  -->
+
+    <!--  ===============================================Separator===============================================  -->
+
+    <!--  Add Fragment Strings  -->
+    <!--    add everything related to the Add fragment in here -->
+    <!--  Add Fragment Strings  -->
+
+    <!--  ===============================================Separator===============================================  -->
+
+    <!--  Done Fragment Strings  -->
+    <!--    add everything related to the Done fragment in here -->
+    <!--  Done Fragment Strings  -->
+
+    <!--  ===============================================Separator===============================================  -->
+</resources>
