@@ -1,15 +1,69 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/views_container"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".ui.home.HomeFragment">
+    android:orientation="vertical"
+    android:layout_marginTop="60dp"
+    android:layout_marginHorizontal="10dp"
+    >
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/buttons_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/btn_tasks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginRight="8dp"
+            android:text="Tasks"
+            android:background="@color/primary"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_courses"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginRight="8dp"
+            android:text="Courses"
+            android:background="@color/primary"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/btn_lectures"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:layout_marginRight="8dp"
+            android:text="Lectures"
+            android:background="@color/primary"
+            android:textColor="@android:color/white" />
+
+
+        <Button
+            android:id="@+id/btn_exams"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="Exams"
+            android:background="@color/primary"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
 
     <TextView
-        android:id="@+id/text_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="test"/>
+        android:gravity="center_horizontal"
+        android:layout_marginTop="240dp"
+        android:text="Start your day organized "
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="normal" />
+
 </LinearLayout>
+
