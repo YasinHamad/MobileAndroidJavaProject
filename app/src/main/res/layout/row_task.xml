@@ -84,7 +84,6 @@
             android:textSize="14sp"
             android:text="mins"
             android:textStyle="italic"
-            android:textColor="@color/black"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
