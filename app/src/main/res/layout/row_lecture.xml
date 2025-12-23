@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/row_layout_padding"
+    android:backgroundTint="@color/row_layout_background"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView_lecture_title"
+        android:layout_width="match_parent"
+        android:textSize="26sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="Database room persistance"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Building: "
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_building_name"
+            android:layout_width="wrap_content"
+            android:text="1"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="italic|bold"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text=" | Room: "
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_room_number"
+            android:layout_width="wrap_content"
+            android:text="444"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="italic|bold"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:text=" | "
+            android:textSize="14sp"
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_type"
+            android:layout_width="wrap_content"
+            android:text="In-Person"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="italic|bold"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="Date: "
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_date"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="01-01-2026"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text=" | Start: "
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_starting_time"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="12:10 AM"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text=" | End: "
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_ending_time"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="12:10 AM"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="Course: "
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_course"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="I3350"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text=" | Teacher: "
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_lecture_teacher"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="Alaa Aldin"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/button_lecture_done"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_done_white"
+            android:backgroundTint="@color/primary"/>
+        <ImageButton
+            android:id="@+id/button_lecture_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel_white"
+            android:backgroundTint="@color/danger"/>
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

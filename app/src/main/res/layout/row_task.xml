@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/row_layout_padding"
+    android:backgroundTint="@color/row_layout_background"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView_task_title"
+        android:layout_width="match_parent"
+        android:textSize="26sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="This is a task title"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/textView_task_description"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:text="This is a very very very very very very very very very very long task description here"
+        android:layout_marginBottom="3dp"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView_task_course"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="Course"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text=" | "
+            android:textStyle="italic"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_task_date"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="01-01-2026"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text=" | "
+            android:textStyle="italic"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_task_startingTime"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="10:10 AM"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text=" | "
+            android:textStyle="italic"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_task_duration"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="30"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="mins"
+            android:textStyle="italic"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="Type: "
+            android:textStyle="italic"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/textView_task_type"
+            android:layout_width="wrap_content"
+            android:textSize="14sp"
+            android:text="reading | summarizing | search"
+            android:textStyle="italic|bold"
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/button_task_done"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_done_white"
+            android:backgroundTint="@color/primary"/>
+        <ImageButton
+            android:id="@+id/button_task_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel_white"
+            android:backgroundTint="@color/danger"/>
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

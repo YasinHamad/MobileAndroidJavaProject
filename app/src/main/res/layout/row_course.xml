@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/row_layout_padding"
+    android:backgroundTint="@color/row_layout_background"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textView_course_title"
+        android:layout_width="match_parent"
+        android:textSize="26sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="Course"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/textView_course_description"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:text="This is a very very very very very very very very very very long course description here"
+        android:layout_marginBottom="5dp"
+        android:layout_height="wrap_content"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:id="@+id/button_course_done"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_done_white"
+            android:backgroundTint="@color/primary"/>
+        <ImageButton
+            android:id="@+id/button_course_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_cancel_white"
+            android:backgroundTint="@color/danger"/>
+    </LinearLayout>
+
+
+
+
+
+</LinearLayout>

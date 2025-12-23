@@ -15,5 +15,6 @@
     <color name="danger">#FFdc3545</color>
     <color name="success">#FF198754</color>
     <color name="warning">#FFffc107</color>
+    <color name="row_layout_background">#FFEEEEEE</color>
     <!--  our colors  -->
 </resources>
