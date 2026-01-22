@@ -3,6 +3,9 @@ package com.yasin.hamad27.mobileandroidjavaproject.ui.home;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +17,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
 import com.yasin.hamad27.mobileandroidjavaproject.adapters.CourseAdapter;
 import com.yasin.hamad27.mobileandroidjavaproject.adapters.ExamAdapter;
@@ -32,6 +37,8 @@ import com.yasin.hamad27.mobileandroidjavaproject.databinding.FragmentHomeBindin
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class HomeFragment extends Fragment {
 
@@ -75,16 +82,7 @@ public class HomeFragment extends Fragment {
         binding.homeRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         isTheLayoutLinear = true;
 
-        // this is just to see the adapters working
-        setFakeData();
-
-        // create all adapters
-        taskAdapter = new TaskAdapter(tasks, getContext());
-        courseAdapter = new CourseAdapter(courses, getContext());
-        examAdapter = new ExamAdapter(exams, getContext());
-        lectureAdapter = new LectureAdapter(lectures, getContext());
-
-        binding.homeRecyclerView.setAdapter(taskAdapter);
+        optimizeButtonWidths();
 
         // at first the task button will be clicked
         binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.white));
@@ -92,7 +90,53 @@ public class HomeFragment extends Fragment {
         binding.btnTasks.setTypeface(null, Typeface.BOLD);
         lastClickedButton = 1;
 
+        setObserversForAllTables();
 
+        setButtonListeners();
+
+        // click the task button when loading the home fragment
+        // inorder to retrive the tasks from the db
+        // then the user can click the button they want
+        binding.btnTasks.performClick();
+
+        AddCourse();
+        AddExam();
+        AddTask();
+        AddLecture();
+    }
+
+    void setObserversForAllTables(){
+        MainActivity.db.taskDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                Log.i("loook", String.valueOf(tasks.get(0).id));
+                taskAdapter = new TaskAdapter(tasks, (MainActivity)getContext());
+            }
+        });
+
+        MainActivity.db.examDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Exam>>() {
+            @Override
+            public void onChanged(List<Exam> exams) {
+                examAdapter = new ExamAdapter(exams, (MainActivity)getContext());
+            }
+        });
+
+        MainActivity.db.lectureDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Lecture>>() {
+            @Override
+            public void onChanged(List<Lecture> lectures) {
+                lectureAdapter = new LectureAdapter(lectures, (MainActivity)getContext());
+            }
+        });
+
+        MainActivity.db.courseDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Course>>() {
+            @Override
+            public void onChanged(List<Course> courses) {
+                courseAdapter = new CourseAdapter(courses , (MainActivity)getContext());
+            }
+        });
+    }
+
+    void setButtonListeners(){
         binding.btnCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,8 +181,6 @@ public class HomeFragment extends Fragment {
                 switchColors(1);
             }
         });
-
-
     }
 
     private void switchColors(int buttonClicked){
@@ -204,6 +246,26 @@ public class HomeFragment extends Fragment {
 
     }
 
+    // since the buttons (tasks-lectures-exams-courses) are fixed
+    // there will be extra free space on the right
+    // this function takes that extra free space, divides by 4, and adds it to the button widths
+    private void optimizeButtonWidths(){
+        DisplayMetrics display = getResources().getDisplayMetrics();
+        int width = display.widthPixels;
+
+        int px_to_remove = Math.round((float) 46 * display.density);
+        int buttons_size = binding.btnTasks.getMaxWidth() + binding.btnCourses.getMaxWidth() + binding.btnExams.getMaxWidth() + binding.btnLectures.getMaxWidth();
+        int free_space = width - (px_to_remove + buttons_size);
+
+        int width_to_add = free_space/4;
+
+        binding.btnTasks.setWidth(width_to_add + binding.btnTasks.getMaxWidth());
+        binding.btnCourses.setWidth(width_to_add +binding.btnCourses.getMaxWidth());
+        binding.btnExams.setWidth(width_to_add + binding.btnExams.getMaxWidth());
+        binding.btnLectures.setWidth(width_to_add + binding.btnLectures.getMaxWidth());
+    }
+
+    // the following 6 functions were for testing
     private void setFakeData(){
         tasks = new ArrayList<Task>();
         for(int i = 0; i<20; i++){
@@ -253,6 +315,87 @@ public class HomeFragment extends Fragment {
             exam.startingTime = "12:00 PM";
             exams.add(exam);
         }
+    }
+    private void AddTask(){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                task = new Task();
+                task.title = "finish the home section";
+                task.description = "each tab should desplay a new recycler view";
+                task.course = "I3350";
+                task.date = "23-12-2025";
+                task.duration = 30;
+                task.startingTime = "12:10 PM";
+                task.type = "reading/searching";
+
+                MainActivity.db.taskDao().insert(task);
+            }
+        });
+    }
+    private void AddCourse(){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                course = new Course();
+                course.title = "I3350";
+                course.description = "This course is very long. It needs a lot of study. But it is very important";
+
+                MainActivity.db.courseDao().insert(course);
+            }
+        });
+    }
+    private void AddExam(){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                exam = new Exam();
+                exam.course = "I3305";
+                exam.examName = "Final";
+                exam.date = "23-12-2025";
+                exam.roomNumber = "D1";
+                exam.duration = 90;
+                exam.seatNumber = "25";
+                exam.startingTime = "12:00 PM";
+
+                MainActivity.db.examDao().insert(exam);
+            }
+        });
+    }
+    private void AddLecture(){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                lecture = new Lecture();
+                lecture.lectureName = "Database room persistance";
+                lecture.buildingName = "Olom";
+                lecture.roomNumber = "A1";
+                lecture.teacher = "Alaa Aldin";
+                lecture.date = "23-12-2025";
+                lecture.course = "I3350";
+                lecture.startingTime = "9:55 AM";
+                lecture.endingTime = "11:35 AM";
+                lecture.type = "In-Person";
+
+                MainActivity.db.lectureDao().insert(lecture);
+            }
+        });
+    }
+    private void DeleteTask(int id){
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                MainActivity.db.taskDao().delete(tasks.get(0));
+                MainActivity.db.examDao().delete(exams.get(0));
+                MainActivity.db.lectureDao().delete(lectures.get(0));
+                MainActivity.db.courseDao().delete(courses.get(0));
+            }
+        });
     }
 
     @Override

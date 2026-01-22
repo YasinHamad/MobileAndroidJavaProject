@@ -4,61 +4,84 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_marginTop="60dp"
+    android:layout_marginTop="0dp"
+    android:gravity="center"
     android:layout_marginHorizontal="10dp">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/buttons_container"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
 
         <Button
             android:id="@+id/btn_tasks"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:padding="12dp"
-            android:layout_marginRight="8dp"
-            android:text="Tasks"
+            android:layout_marginRight="10dp"
+            android:text="Task"
             app:cornerRadius="0sp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="2dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/btn_courses"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:padding="12dp"
-            android:layout_marginRight="8dp"
-            android:text="Courses"
+            android:layout_marginRight="0dp"
             app:cornerRadius="0sp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="2dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
             android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
-
-        <Button
-            android:id="@+id/btn_lectures"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:layout_marginRight="8dp"
-            android:text="Lectures"
-            app:cornerRadius="0sp"
-            android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
-
-
-        <Button
-            android:id="@+id/btn_exams"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="12dp"
-            android:text="Exams"
-            app:cornerRadius="0sp"
-            android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
+            android:textColor="@color/white"
+            android:text="Course"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+        <Button
+            android:id="@+id/btn_lectures"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:padding="12dp"
+            android:layout_marginRight="10dp"
+            app:cornerRadius="0sp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="2dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:text="Lecture"/>
+
+
+        <Button
+            android:id="@+id/btnExams"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:padding="12dp"
+            android:layout_marginRight="0dp"
+            app:cornerRadius="0sp"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="2dp"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:backgroundTint="@color/primary"
+            android:textColor="@color/white"
+            android:text="Exam"/>
+    </LinearLayout>
 
 
 </LinearLayout>

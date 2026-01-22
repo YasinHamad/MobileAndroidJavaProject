@@ -1,6 +1,11 @@
 package com.yasin.hamad27.mobileandroidjavaproject.database;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Exam {
+    @PrimaryKey(autoGenerate = true)
     public int id;
     public String examName;
     public String course;
@@ -9,5 +14,5 @@ public class Exam {
     public String date;
     public String startingTime;
     public int duration;
-    public boolean isDone;
+    public boolean isDone = false;
 }
