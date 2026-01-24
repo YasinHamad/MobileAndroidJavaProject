@@ -1,6 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/doneTvTaskTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="26sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:text="This is a task title"
+        android:layout_marginHorizontal="10dp"/>
+
+    <TextView
+        android:id="@+id/doneTvTaskDescription"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is a very very very very very very very very very very long task description here"
+        android:layout_marginBottom="3dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <ImageButton
+        android:id="@+id/doneBtnTaskDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_cancel_white"
+        android:backgroundTint="@color/danger"
+        android:layout_marginHorizontal="10dp"/>
+
+</LinearLayout>
