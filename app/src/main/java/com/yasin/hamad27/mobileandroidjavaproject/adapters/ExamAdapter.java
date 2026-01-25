@@ -4,16 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Course;
 import com.yasin.hamad27.mobileandroidjavaproject.database.Exam;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> {
 
@@ -46,6 +51,39 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ViewHolder> {
 
             button_exam_done = itemView.findViewById(R.id.button_exam_done);
             button_exam_delete = itemView.findViewById(R.id.button_exam_delete);
+
+            button_exam_done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = getBindingAdapterPosition();
+                            Exam exam = exams.get(index);
+                            exam.isDone = true;
+
+                            MainActivity.db.examDao().update(exam);
+                        }
+                    });
+                }
+            });
+            button_exam_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = getBindingAdapterPosition();
+                            Exam exam = exams.get(index);
+                            exam.isDone = true;
+
+                            MainActivity.db.examDao().delete(exam);
+                        }
+                    });
+                }
+            });
 
         }
     }

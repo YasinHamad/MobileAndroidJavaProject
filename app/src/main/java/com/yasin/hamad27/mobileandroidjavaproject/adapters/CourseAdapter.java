@@ -4,16 +4,20 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
 import com.yasin.hamad27.mobileandroidjavaproject.database.Course;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder> {
 
@@ -39,6 +43,42 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
 
             button_course_done = itemView.findViewById(R.id.button_course_done);
             button_course_delete = itemView.findViewById(R.id.button_course_delete);
+
+            button_course_done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = getBindingAdapterPosition();
+                            Course course = courses.get(index);
+                            course.isDone = true;
+
+                            MainActivity.db.courseDao().update(course);
+                        }
+                    });
+                }
+            });
+
+            button_course_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = getBindingAdapterPosition();
+                            Course course = courses.get(index);
+                            course.isDone = true;
+
+                            MainActivity.db.courseDao().delete(course);
+                        }
+                    });
+                }
+            });
+
+
 
         }
     }

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "test04_db").build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "main_db").build();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

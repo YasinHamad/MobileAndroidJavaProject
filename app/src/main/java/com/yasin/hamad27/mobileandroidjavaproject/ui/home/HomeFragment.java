@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -109,8 +110,8 @@ public class HomeFragment extends Fragment {
         MainActivity.db.taskDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
-                Log.i("loook", String.valueOf(tasks.get(0).id));
                 taskAdapter = new TaskAdapter(tasks, (MainActivity)getContext());
+                binding.btnTasks.performClick();
             }
         });
 
@@ -118,6 +119,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Exam> exams) {
                 examAdapter = new ExamAdapter(exams, (MainActivity)getContext());
+                binding.btnExams.performClick();
             }
         });
 
@@ -125,6 +127,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Lecture> lectures) {
                 lectureAdapter = new LectureAdapter(lectures, (MainActivity)getContext());
+                binding.btnLectures.performClick();
             }
         });
 
@@ -132,6 +135,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onChanged(List<Course> courses) {
                 courseAdapter = new CourseAdapter(courses , (MainActivity)getContext());
+                binding.btnCourses.performClick();
             }
         });
     }

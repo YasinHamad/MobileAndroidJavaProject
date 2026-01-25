@@ -24,7 +24,8 @@
             android:text="Tasks"
             app:cornerRadius="0sp"
             android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/btn_courses"
@@ -35,8 +36,8 @@
             android:text="Courses"
             app:cornerRadius="0sp"
             android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
-
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
         <Button
             android:id="@+id/btn_lectures"
             android:layout_width="wrap_content"
@@ -46,8 +47,8 @@
             android:text="Lectures"
             app:cornerRadius="0sp"
             android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
-
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/btn_exams"
@@ -57,13 +58,15 @@
             android:text="Exams"
             app:cornerRadius="0sp"
             android:backgroundTint="@color/primary"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:paddingBottom="50dp"/>
 
 </LinearLayout>
 

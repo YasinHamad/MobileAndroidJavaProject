@@ -4,16 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Exam;
 import com.yasin.hamad27.mobileandroidjavaproject.database.Lecture;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHolder> {
 
@@ -48,6 +53,39 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHold
 
             button_lecture_done = itemView.findViewById(R.id.button_lecture_done);
             button_lecture_delete = itemView.findViewById(R.id.button_lecture_delete);
+
+            button_lecture_done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = getBindingAdapterPosition();
+                            Lecture lecture = lectures.get(index);
+                            lecture.isDone = true;
+
+                            MainActivity.db.lectureDao().update(lecture);
+                        }
+                    });
+                }
+            });
+            button_lecture_delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    ExecutorService executor = Executors.newSingleThreadExecutor();
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            int index = getBindingAdapterPosition();
+                            Lecture lecture = lectures.get(index);
+                            lecture.isDone = true;
+
+                            MainActivity.db.lectureDao().delete(lecture);
+                        }
+                    });
+                }
+            });
 
         }
     }
