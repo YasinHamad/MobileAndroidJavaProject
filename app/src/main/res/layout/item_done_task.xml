@@ -8,27 +8,27 @@
         android:id="@+id/doneTvTaskTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="26sp"
+        android:layout_marginHorizontal="10dp"
+        android:text=""
         android:textColor="@color/black"
-        android:textStyle="bold"
-        android:text="This is a task title"
-        android:layout_marginHorizontal="10dp"/>
+        android:textSize="26sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/doneTvTaskDescription"
-        android:textSize="16sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="This is a very very very very very very very very very very long task description here"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="3dp"
-        android:layout_marginHorizontal="16dp"/>
+        android:text=""
+        android:textSize="16sp" />
 
     <ImageButton
         android:id="@+id/doneBtnTaskDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_cancel_white"
+        android:layout_marginHorizontal="10dp"
         android:backgroundTint="@color/danger"
-        android:layout_marginHorizontal="10dp"/>
+        android:src="@drawable/ic_cancel_white" />
 
 </LinearLayout>
