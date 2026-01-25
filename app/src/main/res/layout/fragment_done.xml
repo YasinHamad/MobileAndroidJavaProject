@@ -62,15 +62,16 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/doneRecView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
     <Button
-        android:id="@+id/doneBtnTaskDeleteAll"
+        android:id="@+id/doneBtnDeleteAll"
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/danger"
         android:text="Delete all"
-        android:textSize="7dp"
+        android:textSize="12dp"
         android:padding="0dp"
         android:layout_gravity="end"
         />

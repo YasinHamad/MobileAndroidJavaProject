@@ -14,12 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
 import com.yasin.hamad27.mobileandroidjavaproject.databinding.FragmentDoneBinding;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DoneFragment extends Fragment {
 
     private FragmentDoneBinding binding;
+    String currentSection;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
@@ -37,6 +42,62 @@ public class DoneFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         optimizeButtonWidths();
+
+        currentSection = "tasks";
+
+        binding.btnTasks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentSection = "tasks";
+            }
+        });
+
+        binding.btnCourses.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentSection = "courses";
+            }
+        });
+
+        binding.btnLectures.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentSection = "lectures";
+            }
+        });
+
+        binding.btnExams.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentSection = "exams";
+            }
+        });
+
+        binding.doneBtnDeleteAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        switch (currentSection) {
+                            case "tasks":
+                                MainActivity.db.taskDao().deleteAll();
+                                break;
+                            case "courses":
+                                MainActivity.db.courseDao().deleteAll();
+                                break;
+                            case "lectures":
+                                MainActivity.db.lectureDao().deleteAll();
+                                break;
+                            case "exams":
+                                MainActivity.db.examDao().deleteAll();
+                                break;
+                        }
+                    }
+                });
+            }
+        });
     }
 
     // since the buttons (tasks-lectures-exams-courses) are fixed
