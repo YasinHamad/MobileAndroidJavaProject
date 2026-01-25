@@ -11,16 +11,17 @@
         android:textSize="26sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="Final"
+        android:text=""
         android:layout_marginHorizontal="10dp"/>
     <TextView
         android:id="@+id/doneTvExamDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="Date: 01-01-2026"
+        android:text=""
         android:textStyle="italic|bold"
-        android:layout_marginHorizontal="16dp"/>
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="3dp"/>
 
     <ImageButton
         android:id="@+id/doneBtnExamDelete"
@@ -28,6 +29,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:backgroundTint="@color/danger"
-        android:src="@drawable/ic_cancel_white"/>
+        android:src="@drawable/ic_cancel_white"
+        android:layout_marginBottom="3dp"/>
+
+
 
 </LinearLayout>

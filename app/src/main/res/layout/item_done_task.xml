@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:backgroundTint="@color/danger"
-        android:src="@drawable/ic_cancel_white" />
+        android:src="@drawable/ic_cancel_white"
+        android:layout_marginBottom="3dp"/>
 
 </LinearLayout>

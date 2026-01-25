@@ -5,21 +5,23 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView_lecture_title"
+        android:id="@+id/doneTvLectureTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="26sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:text="Database room persistance" />
+        android:text=""
+        android:layout_marginHorizontal="10dp"/>
 
     <TextView
         android:id="@+id/doneTvCourseName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="Course: I3350"
-        android:textStyle="italic|bold" />
+        android:text=""
+        android:textStyle="italic|bold"
+        android:layout_marginHorizontal="16dp" />
 
     <ImageButton
         android:id="@+id/doneBtnLectureDelete"
@@ -27,6 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
         android:backgroundTint="@color/danger"
-        android:src="@drawable/ic_cancel_white"/>
+        android:src="@drawable/ic_cancel_white"
+        android:layout_marginBottom="3dp"/>
 
 </LinearLayout>
