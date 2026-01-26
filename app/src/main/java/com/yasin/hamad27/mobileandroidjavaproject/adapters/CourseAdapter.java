@@ -90,15 +90,41 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         return new CourseAdapter.ViewHolder(view);
     }
 
-    @Override
+   /** @Override
     public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
         holder.textView_course_title.setText(courses.get(position).title);
         holder.textView_course_description.setText(courses.get(position).description);
 
-    }
+    }**/
 
     @Override
     public int getItemCount() {
         return courses.size();
+    }
+    @Override
+    public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
+        Course currentCourse = courses.get(position);
+
+        holder.textView_course_title.setText(currentCourse.title);
+        holder.textView_course_description.setText(currentCourse.description);
+
+        // Add delete button functionality
+        holder.button_course_delete.setOnClickListener(v -> {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                MainActivity.db.courseDao().delete(currentCourse);
+            });
+            executor.shutdown();
+        });
+
+        // Add done button functionality
+        holder.button_course_done.setOnClickListener(v -> {
+            currentCourse.isDone = true;
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                MainActivity.db.courseDao().update(currentCourse);
+            });
+            executor.shutdown();
+        });
     }
 }

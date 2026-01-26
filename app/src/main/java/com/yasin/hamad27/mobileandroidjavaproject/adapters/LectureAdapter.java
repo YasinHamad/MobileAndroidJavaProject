@@ -96,8 +96,40 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHold
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_lecture, parent, false);
         return new LectureAdapter.ViewHolder(view);
     }
-
     @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Lecture currentLecture = lectures.get(position);
+
+        holder.textView_lecture_title.setText(currentLecture.lectureName);
+        holder.textView_lecture_building_name.setText(currentLecture.buildingName);
+        holder.textView_lecture_room_number.setText(currentLecture.roomNumber);
+        holder.textView_lecture_type.setText(currentLecture.type);
+        holder.textView_lecture_date.setText(currentLecture.date);
+        holder.textView_lecture_starting_time.setText(currentLecture.startingTime);
+        holder.textView_lecture_ending_time.setText(currentLecture.endingTime);
+        holder.textView_lecture_course.setText(currentLecture.course);
+        holder.textView_lecture_teacher.setText(currentLecture.teacher);
+
+        // Add delete button functionality
+        holder.button_lecture_delete.setOnClickListener(v -> {
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                MainActivity.db.lectureDao().delete(currentLecture);
+            });
+            executor.shutdown();
+        });
+
+        // Add done button functionality
+        holder.button_lecture_done.setOnClickListener(v -> {
+            currentLecture.isDone = true;
+            ExecutorService executor = Executors.newSingleThreadExecutor();
+            executor.execute(() -> {
+                MainActivity.db.lectureDao().update(currentLecture);
+            });
+            executor.shutdown();
+        });
+    }
+    /**@Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.textView_lecture_title.setText(lectures.get(position).lectureName);
         holder.textView_lecture_building_name.setText(lectures.get(position).buildingName);
@@ -108,7 +140,7 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHold
         holder.textView_lecture_ending_time.setText(lectures.get(position).endingTime);
         holder.textView_lecture_course.setText(lectures.get(position).course);
         holder.textView_lecture_teacher.setText(lectures.get(position).teacher);
-    }
+    }**/
 
     @Override
     public int getItemCount() {
