@@ -75,13 +75,15 @@ public class DoneTaskAdapter extends RecyclerView.Adapter<DoneTaskAdapter.MyView
         holder.getTaskTitle().setText(task.title);
         holder.getTaskDescription().setText(task.description);
 
-        // 🔹 Delete single task safely using LiveData
-        holder.getTaskBtnDelete().setOnClickListener(v -> {
-            Task taskToDelete = task;
-            executor.execute(() -> {
-                MainActivity.db.taskDao().delete(taskToDelete);
-                // no need to remove from taskList, LiveData will update automatically
-            });
+        // 🔹 Safe deletion using binding adapter position
+        holder.BtnTaskDelete.setOnClickListener(v -> {
+            int index = holder.getBindingAdapterPosition();
+            if (index != RecyclerView.NO_POSITION) { // always check
+                Task taskToDelete = taskList.get(index);
+                executor.execute(() -> {
+                    MainActivity.db.taskDao().delete(taskToDelete);
+                });
+            }
         });
     }
 

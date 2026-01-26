@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
 import com.yasin.hamad27.mobileandroidjavaproject.database.Course;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Lecture;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -20,6 +21,8 @@ import java.util.concurrent.Executors;
 public class DoneCourseAdapter extends RecyclerView.Adapter<DoneCourseAdapter.MyViewHolder> {
 
     private List<Course> courseList;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
 
     public DoneCourseAdapter(List<Course> courseList) {
         this.courseList = courseList;
@@ -32,12 +35,12 @@ public class DoneCourseAdapter extends RecyclerView.Adapter<DoneCourseAdapter.My
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView courseName;
-        ImageView btnDelete;
+        ImageView btnCourseDelete;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
             courseName = view.findViewById(R.id.doneTvCourseName);
-            btnDelete = view.findViewById(R.id.doneBtnCourseDelete);
+            btnCourseDelete = view.findViewById(R.id.doneBtnCourseDelete);
         }
     }
 
@@ -59,15 +62,12 @@ public class DoneCourseAdapter extends RecyclerView.Adapter<DoneCourseAdapter.My
 
         holder.courseName.setText(course.title);
 
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        MainActivity.db.courseDao().delete(course);
-                    }
+        holder.btnCourseDelete.setOnClickListener(v -> {
+            int index = holder.getBindingAdapterPosition();
+            if (index != RecyclerView.NO_POSITION) { // always check
+                Course courseToDelete = courseList.get(index);
+                executor.execute(() -> {
+                    MainActivity.db.courseDao().delete(courseToDelete);
                 });
             }
         });

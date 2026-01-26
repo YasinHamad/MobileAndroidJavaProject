@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
 import com.yasin.hamad27.mobileandroidjavaproject.database.Lecture;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Task;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -20,6 +21,9 @@ import java.util.concurrent.Executors;
 public class DoneLectureAdapter extends RecyclerView.Adapter<DoneLectureAdapter.MyViewHolder> {
 
     private List<Lecture> lectureList;
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
 
     public DoneLectureAdapter(List<Lecture> lectureList) {
         this.lectureList = lectureList;
@@ -32,13 +36,13 @@ public class DoneLectureAdapter extends RecyclerView.Adapter<DoneLectureAdapter.
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView lectureTitle, courseName;
-        ImageView btnDelete;
+        ImageView btnLectureDelete;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
             lectureTitle = view.findViewById(R.id.doneTvLectureTitle);
             courseName = view.findViewById(R.id.doneTvCourseName);
-            btnDelete = view.findViewById(R.id.doneBtnLectureDelete);
+            btnLectureDelete = view.findViewById(R.id.doneBtnLectureDelete);
         }
     }
 
@@ -56,15 +60,12 @@ public class DoneLectureAdapter extends RecyclerView.Adapter<DoneLectureAdapter.
         holder.lectureTitle.setText(lecture.lectureName);
         holder.courseName.setText(lecture.course);
 
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        MainActivity.db.lectureDao().delete(lecture);
-                    }
+        holder.btnLectureDelete.setOnClickListener(v -> {
+            int index = holder.getBindingAdapterPosition();
+            if (index != RecyclerView.NO_POSITION) { // always check
+                Lecture lectureToDelete = lectureList.get(index);
+                executor.execute(() -> {
+                    MainActivity.db.lectureDao().delete(lectureToDelete);
                 });
             }
         });
@@ -72,6 +73,6 @@ public class DoneLectureAdapter extends RecyclerView.Adapter<DoneLectureAdapter.
 
     @Override
     public int getItemCount() {
-        return lectureList.size();
+        return lectureList == null ? 0 : lectureList.size();
     }
 }

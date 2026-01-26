@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
 import com.yasin.hamad27.mobileandroidjavaproject.database.Exam;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Lecture;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -20,6 +21,8 @@ import java.util.concurrent.Executors;
 public class DoneExamAdapter extends RecyclerView.Adapter<DoneExamAdapter.MyViewHolder> {
 
     private List<Exam> examList;
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public DoneExamAdapter(List<Exam> examList) {
         this.examList = examList;
@@ -32,13 +35,13 @@ public class DoneExamAdapter extends RecyclerView.Adapter<DoneExamAdapter.MyView
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         TextView examName, examDate;
-        ImageView btnDelete;
+        ImageView btnExamDelete;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
             examName = view.findViewById(R.id.doneTvExamName);
             examDate = view.findViewById(R.id.doneTvExamDate);
-            btnDelete = view.findViewById(R.id.doneBtnExamDelete);
+            btnExamDelete = view.findViewById(R.id.doneBtnExamDelete);
         }
     }
 
@@ -56,16 +59,12 @@ public class DoneExamAdapter extends RecyclerView.Adapter<DoneExamAdapter.MyView
         holder.examName.setText(exam.examName);
         holder.examDate.setText(exam.date);
 
-        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ExecutorService executor = Executors.newSingleThreadExecutor();
-                executor.execute(new Runnable() {
-                    @Override
-                    public void run() {
-                        MainActivity.db.examDao().delete(exam);
-
-                    }
+        holder.btnExamDelete.setOnClickListener(v -> {
+            int index = holder.getBindingAdapterPosition();
+            if (index != RecyclerView.NO_POSITION) { // always check
+                Exam examToDelete = examList.get(index);
+                executor.execute(() -> {
+                    MainActivity.db.examDao().delete(examToDelete);
                 });
             }
         });

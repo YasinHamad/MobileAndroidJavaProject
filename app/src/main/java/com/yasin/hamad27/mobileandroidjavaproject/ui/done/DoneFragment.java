@@ -33,6 +33,9 @@ public class DoneFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private DoneTaskAdapter taskAdapter;
+    private DoneCourseAdapter courseAdapter;
+    private DoneLectureAdapter lectureAdapter;
+    private DoneExamAdapter examAdapter;
     private ExecutorService executor;
 
     @Override
@@ -46,7 +49,11 @@ public class DoneFragment extends Fragment {
         // 🔹 Setup RecyclerView
         recyclerView = binding.doneRecView;
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         taskAdapter = new DoneTaskAdapter(new ArrayList<>()); // start with empty list
+        courseAdapter = new DoneCourseAdapter(new ArrayList<>());
+        lectureAdapter = new DoneLectureAdapter(new ArrayList<>());
+        examAdapter = new DoneExamAdapter(new ArrayList<>());
         recyclerView.setAdapter(taskAdapter);
 
         executor = Executors.newSingleThreadExecutor();
@@ -69,6 +76,7 @@ public class DoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 currentSection = "tasks";
+                recyclerView.setAdapter(taskAdapter);
                 loadDataFromDb("tasks");
             }
         });
@@ -77,6 +85,7 @@ public class DoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 currentSection = "courses";
+                recyclerView.setAdapter(courseAdapter);
                 loadDataFromDb("courses");
             }
         });
@@ -86,6 +95,7 @@ public class DoneFragment extends Fragment {
             public void onClick(View v) {
                 currentSection = "lectures";
                 loadDataFromDb("lectures");
+                recyclerView.setAdapter(lectureAdapter);
             }
         });
 
@@ -93,6 +103,7 @@ public class DoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 currentSection = "exams";
+                recyclerView.setAdapter(examAdapter);
                 loadDataFromDb("exams");
             }
         });
@@ -130,22 +141,25 @@ public class DoneFragment extends Fragment {
         switch (section) {
             case "tasks":
                 MainActivity.db.taskDao().getAll(true).observe(getViewLifecycleOwner(), tasks -> {
-                    if (taskAdapter == null) {
-                        taskAdapter = new DoneTaskAdapter(tasks);
-                        recyclerView.setAdapter(taskAdapter);
-                    } else {
                         taskAdapter.setTaskList(tasks);
-                    }
                 });
                 break;
 
             case "courses":
-                // TODO: observe Course LiveData
+                MainActivity.db.courseDao().getAll(true).observe(getViewLifecycleOwner(), courses -> {
+                        courseAdapter.setCourseList(courses);
+                });
                 break;
             case "lectures":
+                MainActivity.db.lectureDao().getAll(true).observe(getViewLifecycleOwner(), lectures -> {
+                        lectureAdapter.setLectureList(lectures);
+                });
                 // TODO: observe Lecture LiveData
                 break;
             case "exams":
+                MainActivity.db.examDao().getAll(true).observe(getViewLifecycleOwner(), exams -> {
+                        examAdapter.setExamList(exams);
+                });
                 // TODO: observe Exam LiveData
                 break;
         }
