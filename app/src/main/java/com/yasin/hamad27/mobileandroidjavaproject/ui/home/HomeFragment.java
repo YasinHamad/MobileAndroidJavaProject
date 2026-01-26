@@ -100,13 +100,13 @@ public class HomeFragment extends Fragment {
         // then the user can click the button they want
         binding.btnTasks.performClick();
 
-        AddCourse();
+        /**AddCourse();
         AddExam();
         AddTask();
-        AddLecture();
+        AddLecture();**/
     }
 
-    void setObserversForAllTables(){
+    /**void setObserversForAllTables(){
         MainActivity.db.taskDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
@@ -139,7 +139,60 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+**/
+    void setObserversForAllTables(){
+        // Tasks Observer
+        MainActivity.db.taskDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
+            @Override
+            public void onChanged(List<Task> tasks) {
+                if (tasks != null && binding != null) { // ← ADD THIS CHECK
+                    taskAdapter = new TaskAdapter(tasks, getContext());
+                    if (lastClickedButton == 1) {
+                        binding.homeRecyclerView.setAdapter(taskAdapter);
+                    }
+                }
+            }
+        });
 
+        // Courses Observer
+        MainActivity.db.courseDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
+            @Override
+            public void onChanged(List<Course> courses) {
+                if (courses != null && binding != null) { // ← ADD THIS CHECK
+                    courseAdapter = new CourseAdapter(courses, getContext());
+                    if (lastClickedButton == 2) {
+                        binding.homeRecyclerView.setAdapter(courseAdapter);
+                    }
+                }
+            }
+        });
+
+        // Lectures Observer
+        MainActivity.db.lectureDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Lecture>>() {
+            @Override
+            public void onChanged(List<Lecture> lectures) {
+                if (lectures != null && binding != null) { // ← ADD THIS CHECK
+                    lectureAdapter = new LectureAdapter(lectures, getContext());
+                    if (lastClickedButton == 3) {
+                        binding.homeRecyclerView.setAdapter(lectureAdapter);
+                    }
+                }
+            }
+        });
+
+        // Exams Observer
+        MainActivity.db.examDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Exam>>() {
+            @Override
+            public void onChanged(List<Exam> exams) {
+                if (exams != null && binding != null) { // ← ADD THIS CHECK
+                    examAdapter = new ExamAdapter(exams, getContext());
+                    if (lastClickedButton == 4) {
+                        binding.homeRecyclerView.setAdapter(examAdapter);
+                    }
+                }
+            }
+        });
+    }
     void setButtonListeners(){
         binding.btnCourses.setOnClickListener(new View.OnClickListener() {
             @Override

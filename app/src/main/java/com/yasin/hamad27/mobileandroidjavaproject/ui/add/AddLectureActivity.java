@@ -138,7 +138,6 @@ public class AddLectureActivity extends AppCompatActivity {
                     Toast.makeText(AddLectureActivity.this,
                             "Lecture saved successfully!",
                             Toast.LENGTH_SHORT).show();
-
                     // Close activity and go back
                     finish();
                 });
