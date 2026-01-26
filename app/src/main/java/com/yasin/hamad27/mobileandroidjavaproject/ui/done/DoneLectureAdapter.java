@@ -9,68 +9,69 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Lecture;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DoneLectureAdapter extends RecyclerView.Adapter<DoneLectureAdapter.MyViewHolder> {
 
-    String[] lectureTitle;
-    String[] courseName;
-    int[] BtnLectureDelete;
+    private List<Lecture> lectureList;
 
-    public DoneLectureAdapter(String[] lectureTitle, String[] courseName, int[] BtnLectureDelete) {
-        this.lectureTitle = lectureTitle;
-        this.courseName = courseName;
-        this.BtnLectureDelete = BtnLectureDelete;
+    public DoneLectureAdapter(List<Lecture> lectureList) {
+        this.lectureList = lectureList;
+    }
+
+    public void setLectureList(List<Lecture> lectureList) {
+        this.lectureList = lectureList;
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        private final TextView lectureTitle;
-        private final TextView courseName;
-        private final ImageView BtnLectureDelete;
+        TextView lectureTitle, courseName;
+        ImageView btnDelete;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
             lectureTitle = view.findViewById(R.id.doneTvLectureTitle);
             courseName = view.findViewById(R.id.doneTvCourseName);
-            BtnLectureDelete = view.findViewById(R.id.doneBtnLectureDelete);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
-        }
-
-        public TextView getLectureTitle() {
-            return lectureTitle;
-        }
-
-        public TextView getCourseName() {
-            return courseName;
-        }
-
-        public ImageView getLectureBtnDelete() {
-            return BtnLectureDelete;
+            btnDelete = view.findViewById(R.id.doneBtnLectureDelete);
         }
     }
 
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_done_lecture, parent, false);
+        return new MyViewHolder(view);
+    }
 
-        @NonNull
-        @Override
-        public DoneLectureAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_done_lecture, parent, false);
-            return new DoneLectureAdapter.MyViewHolder(view);
-        }
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Lecture lecture = lectureList.get(position);
 
-        @Override
-        public void onBindViewHolder(@NonNull DoneLectureAdapter.MyViewHolder holder, int position) {
-            holder.getLectureTitle().setText(lectureTitle[position]);
-            holder.getCourseName().setText(courseName[position]);
-            holder.getLectureBtnDelete().setImageResource(BtnLectureDelete[position]);
-        }
+        holder.lectureTitle.setText(lecture.lectureName);
+        holder.courseName.setText(lecture.course);
 
-        @Override
-        public int getItemCount() {
-            return lectureTitle.length;
-        }
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        MainActivity.db.lectureDao().delete(lecture);
+                    }
+                });
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return lectureList.size();
+    }
 }

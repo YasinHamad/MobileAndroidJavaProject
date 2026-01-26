@@ -9,68 +9,72 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Course;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DoneCourseAdapter extends RecyclerView.Adapter<DoneCourseAdapter.MyViewHolder> {
 
-        String[] courseTitle;
-        String[] courseDescription;
-        int[] BtnCourseDelete;
+    private List<Course> courseList;
 
-        public DoneCourseAdapter(String[] courseTitle, String[] courseDescription, int[] BtnCourseDelete) {
-            this.courseTitle = courseTitle;
-            this.courseDescription = courseDescription;
-            this.BtnCourseDelete = BtnCourseDelete;
+    public DoneCourseAdapter(List<Course> courseList) {
+        this.courseList = courseList;
+    }
+
+    public void setCourseList(List<Course> courseList) {
+        this.courseList = courseList;
+        notifyDataSetChanged();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView courseName;
+        ImageView btnDelete;
+
+        public MyViewHolder(@NonNull View view) {
+            super(view);
+            courseName = view.findViewById(R.id.doneTvCourseName);
+            btnDelete = view.findViewById(R.id.doneBtnCourseDelete);
         }
+    }
 
-        public static class MyViewHolder extends RecyclerView.ViewHolder {
-            private final TextView courseTitle;
-            private final TextView courseDescription;
-            private final ImageView BtnCourseDelete;
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType
+    ) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_done_course, parent, false);
+        return new MyViewHolder(view);
+    }
 
-            public MyViewHolder(@NonNull View view) {
-                super(view);
-                courseTitle = view.findViewById(R.id.doneTvCourseTitle);
-                courseDescription = view.findViewById(R.id.doneTvCourseDescription);
-                BtnCourseDelete = view.findViewById(R.id.doneBtnCourseDelete);
-                view.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onBindViewHolder(
+            @NonNull MyViewHolder holder, int position
+    ) {
+        Course course = courseList.get(position);
+
+        holder.courseName.setText(course.title);
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(new Runnable() {
                     @Override
-                    public void onClick(View v) {
-
+                    public void run() {
+                        MainActivity.db.courseDao().delete(course);
                     }
                 });
             }
+        });
+    }
 
-            public TextView getCourseTitle() {
-                return courseTitle;
-            }
-
-            public TextView getCourseDescription() {
-                return courseDescription;
-            }
-
-            public ImageView getCourseBtnDelete() {
-                return BtnCourseDelete;
-            }
-        }
-
-
-        @NonNull
-        @Override
-        public DoneCourseAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_done_lecture, parent, false);
-            return new DoneCourseAdapter.MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull DoneCourseAdapter.MyViewHolder holder, int position) {
-            holder.getCourseTitle().setText(courseTitle[position]);
-            holder.getCourseDescription().setText(courseDescription[position]);
-            holder.getCourseBtnDelete().setImageResource(BtnCourseDelete[position]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return courseTitle.length;
-        }
+    @Override
+    public int getItemCount() {
+        return courseList.size();
+    }
 }

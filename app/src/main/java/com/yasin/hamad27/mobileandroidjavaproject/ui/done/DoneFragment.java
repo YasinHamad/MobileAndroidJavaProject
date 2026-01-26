@@ -7,6 +7,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -16,8 +18,11 @@ import android.view.ViewGroup;
 
 import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Task;
 import com.yasin.hamad27.mobileandroidjavaproject.databinding.FragmentDoneBinding;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -26,6 +31,10 @@ public class DoneFragment extends Fragment {
     private FragmentDoneBinding binding;
     String currentSection;
 
+    private RecyclerView recyclerView;
+    private DoneTaskAdapter taskAdapter;
+    private ExecutorService executor;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -33,6 +42,17 @@ public class DoneFragment extends Fragment {
         binding = FragmentDoneBinding.inflate(inflater, container, false);
 
         View root = binding.getRoot();
+
+        // 🔹 Setup RecyclerView
+        recyclerView = binding.doneRecView;
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        taskAdapter = new DoneTaskAdapter(new ArrayList<>()); // start with empty list
+        recyclerView.setAdapter(taskAdapter);
+
+        executor = Executors.newSingleThreadExecutor();
+
+        currentSection = "tasks";
+        loadDataFromDb(currentSection);
 
         return root;
     }
@@ -49,6 +69,7 @@ public class DoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 currentSection = "tasks";
+                loadDataFromDb("tasks");
             }
         });
 
@@ -56,6 +77,7 @@ public class DoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 currentSection = "courses";
+                loadDataFromDb("courses");
             }
         });
 
@@ -63,6 +85,7 @@ public class DoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 currentSection = "lectures";
+                loadDataFromDb("lectures");
             }
         });
 
@@ -70,6 +93,7 @@ public class DoneFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 currentSection = "exams";
+                loadDataFromDb("exams");
             }
         });
 
@@ -99,6 +123,35 @@ public class DoneFragment extends Fragment {
             }
         });
     }
+
+
+    // 🔹 Load data from DB depending on current section
+    private void loadDataFromDb(String section) {
+        switch (section) {
+            case "tasks":
+                MainActivity.db.taskDao().getAll(true).observe(getViewLifecycleOwner(), tasks -> {
+                    if (taskAdapter == null) {
+                        taskAdapter = new DoneTaskAdapter(tasks);
+                        recyclerView.setAdapter(taskAdapter);
+                    } else {
+                        taskAdapter.setTaskList(tasks);
+                    }
+                });
+                break;
+
+            case "courses":
+                // TODO: observe Course LiveData
+                break;
+            case "lectures":
+                // TODO: observe Lecture LiveData
+                break;
+            case "exams":
+                // TODO: observe Exam LiveData
+                break;
+        }
+    }
+
+
 
     // since the buttons (tasks-lectures-exams-courses) are fixed
     // there will be extra free space on the right

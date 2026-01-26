@@ -9,68 +9,70 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Exam;
+
+import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DoneExamAdapter extends RecyclerView.Adapter<DoneExamAdapter.MyViewHolder> {
 
-        String[] examName;
-        String[] examDate;
-        int[] BtnExamDelete;
+    private List<Exam> examList;
 
-        public DoneExamAdapter(String[] examName, String[] examDate, int[] BtnExamDelete) {
-            this.examName = examName;
-            this.examDate = examDate;
-            this.BtnExamDelete = BtnExamDelete;
+    public DoneExamAdapter(List<Exam> examList) {
+        this.examList = examList;
+    }
+
+    public void setExamList(List<Exam> examList) {
+        this.examList = examList;
+        notifyDataSetChanged();
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView examName, examDate;
+        ImageView btnDelete;
+
+        public MyViewHolder(@NonNull View view) {
+            super(view);
+            examName = view.findViewById(R.id.doneTvExamName);
+            examDate = view.findViewById(R.id.doneTvExamDate);
+            btnDelete = view.findViewById(R.id.doneBtnExamDelete);
         }
+    }
 
-        public static class MyViewHolder extends RecyclerView.ViewHolder {
-            private final TextView examName;
-            private final TextView examDate;
-            private final ImageView BtnExamDelete;
+    @NonNull
+    @Override
+    public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_done_exam, parent, false);
+        return new MyViewHolder(view);
+    }
 
-            public MyViewHolder(@NonNull View view) {
-                super(view);
-                examName = view.findViewById(R.id.doneTvExamName);
-                examDate = view.findViewById(R.id.doneTvExamDate);
-                BtnExamDelete = view.findViewById(R.id.doneBtnExamDelete);
-                view.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Exam exam = examList.get(position);
+
+        holder.examName.setText(exam.examName);
+        holder.examDate.setText(exam.date);
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                executor.execute(new Runnable() {
                     @Override
-                    public void onClick(View v) {
+                    public void run() {
+                        MainActivity.db.examDao().delete(exam);
 
                     }
                 });
             }
+        });
+    }
 
-            public TextView getExamName() {
-                return examName;
-            }
-
-            public TextView getExamDate() {
-                return examDate;
-            }
-
-            public ImageView getExamBtnDelete() {
-                return BtnExamDelete;
-            }
-        }
-
-
-        @NonNull
-        @Override
-        public DoneExamAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_done_exam, parent, false);
-            return new DoneExamAdapter.MyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull DoneExamAdapter.MyViewHolder holder, int position) {
-            holder.getExamName().setText(examName[position]);
-            holder.getExamDate().setText(examDate[position]);
-            holder.getExamBtnDelete().setImageResource(BtnExamDelete[position]);
-        }
-
-        @Override
-        public int getItemCount() {
-            return examName.length;
-        }
+    @Override
+    public int getItemCount() {
+        return examList.size();
+    }
 }

@@ -9,18 +9,31 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
+import com.yasin.hamad27.mobileandroidjavaproject.database.Task;
+
+import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class DoneTaskAdapter extends RecyclerView.Adapter<DoneTaskAdapter.MyViewHolder> {
 
-    String[] taskTitle;
-    String[] taskDescription;
-    int[] BtnTaskDelete;
+    // 🔹 CHANGED: arrays → List<Task>
+    private List<Task> taskList;
 
-    public DoneTaskAdapter(String[] taskTitle, String[] taskDescription, int[] BtnTaskDelete) {
-        this.taskTitle = taskTitle;
-        this.taskDescription = taskDescription;
-        this.BtnTaskDelete = BtnTaskDelete;
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+
+    // 🔹 CHANGED: constructor
+    public DoneTaskAdapter(List<Task> taskList) {
+        this.taskList = taskList;
+    }
+
+    // 🔹 ADDED: allows updating data after DB fetch
+    public void setTaskList(List<Task> taskList) {
+        this.taskList = taskList;
+        notifyDataSetChanged();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
@@ -33,12 +46,6 @@ public class DoneTaskAdapter extends RecyclerView.Adapter<DoneTaskAdapter.MyView
             taskTitle = view.findViewById(R.id.doneTvTaskTitle);
             taskDescription = view.findViewById(R.id.doneTvTaskDescription);
             BtnTaskDelete = view.findViewById(R.id.doneBtnTaskDelete);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });
         }
 
         public TextView getTaskTitle() {
@@ -54,7 +61,6 @@ public class DoneTaskAdapter extends RecyclerView.Adapter<DoneTaskAdapter.MyView
         }
     }
 
-
     @NonNull
     @Override
     public DoneTaskAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -64,13 +70,24 @@ public class DoneTaskAdapter extends RecyclerView.Adapter<DoneTaskAdapter.MyView
 
     @Override
     public void onBindViewHolder(@NonNull DoneTaskAdapter.MyViewHolder holder, int position) {
-        holder.getTaskTitle().setText(taskTitle[position]);
-        holder.getTaskDescription().setText(taskDescription[position]);
-        holder.getTaskBtnDelete().setImageResource(BtnTaskDelete[position]);
+        Task task = taskList.get(position);
+
+        holder.getTaskTitle().setText(task.title);
+        holder.getTaskDescription().setText(task.description);
+
+        // 🔹 Delete single task safely using LiveData
+        holder.getTaskBtnDelete().setOnClickListener(v -> {
+            Task taskToDelete = task;
+            executor.execute(() -> {
+                MainActivity.db.taskDao().delete(taskToDelete);
+                // no need to remove from taskList, LiveData will update automatically
+            });
+        });
     }
 
     @Override
     public int getItemCount() {
-        return taskTitle.length;
+        return taskList == null ? 0 : taskList.size();
     }
+
 }
