@@ -54,10 +54,7 @@ public class AddCourseActivity extends AppCompatActivity {
         String description = editTextCourseDescription.getText().toString().trim();
 
         // Validate required fields
-        if (titl- git add *
-                - git commit -m "your message to the team"
-                - git push origin main
-        e.isEmpty()) {
+        if (title.isEmpty()) {
             Toast.makeText(this, "Please enter course title", Toast.LENGTH_SHORT).show();
             editTextCourseTitle.requestFocus();
             return;
