@@ -8,7 +8,8 @@
     android:layout_marginHorizontal="20dp"
     android:layout_marginTop="20dp"
     android:orientation="vertical"
-    tools:context=".ui.add.AddLectureActivity" android:layout_width="">
+    tools:context=".ui.add.AddLectureActivity"
+    android:layout_width="match_parent">
 
         <TextView
             android:layout_width="match_parent"
