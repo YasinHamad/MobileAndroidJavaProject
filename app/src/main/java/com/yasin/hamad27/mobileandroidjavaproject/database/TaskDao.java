@@ -30,6 +30,9 @@ public interface TaskDao {
     @Delete
     void delete(Task task);
 
+    @Query("DELETE FROM TASK WHERE isDone = 1")
+    void deleteAllDoneTasks();
+
     @Update
     void update(Task task);
 }

@@ -26,6 +26,9 @@ public interface ExamDao {
     @Delete
     void deleteAll(Exam... exams);
 
+    @Query("DELETE FROM EXAM WHERE isDone = 1")
+    void deleteAllDoneExams();
+
     @Delete
     void delete(Exam exam);
 

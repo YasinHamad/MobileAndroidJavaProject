@@ -29,6 +29,9 @@ public interface LectureDao {
     @Delete
     void delete(Lecture lecture);
 
+    @Query("DELETE FROM LECTURE WHERE isDone = 1")
+    void deleteAllDoneLectures();
+
     @Update
     void update(Lecture lecture);
 }

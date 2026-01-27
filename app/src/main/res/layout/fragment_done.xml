@@ -59,22 +59,21 @@
             android:textColor="@android:color/white" />
     </LinearLayout>
 
+    <ImageButton
+        android:id="@+id/doneBtnDeleteAll"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/danger"
+        android:src="@drawable/ic_cancel_white"
+        android:layout_gravity="end"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/doneRecView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <Button
-        android:id="@+id/doneBtnDeleteAll"
-        android:layout_width="60dp"
-        android:layout_height="50dp"
-        android:backgroundTint="@color/danger"
-        android:text="Delete all"
-        android:textSize="12dp"
-        android:padding="0dp"
-        android:layout_gravity="end"
-        />
 
 </LinearLayout>
 
