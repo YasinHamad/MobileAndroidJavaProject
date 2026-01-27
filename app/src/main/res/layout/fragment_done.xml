@@ -12,13 +12,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_marginTop="30dp">
 
         <Button
             android:id="@+id/btn_tasks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="10dp"
             android:layout_marginRight="8dp"
             android:text="Tasks"
             app:cornerRadius="0sp"
@@ -29,7 +30,7 @@
             android:id="@+id/btn_courses"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="10dp"
             android:layout_marginRight="8dp"
             android:text="Courses"
             app:cornerRadius="0sp"
@@ -40,10 +41,11 @@
             android:id="@+id/btn_lectures"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="10dp"
             android:layout_marginRight="8dp"
             android:text="Lectures"
             app:cornerRadius="0sp"
+            android:textSize="12sp"
             android:backgroundTint="@color/primary"
             android:textColor="@android:color/white" />
 
@@ -52,7 +54,7 @@
             android:id="@+id/btn_exams"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="10dp"
             android:text="Exams"
             app:cornerRadius="0sp"
             android:backgroundTint="@color/primary"
@@ -72,6 +74,7 @@
         android:id="@+id/doneRecView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingBottom="0dp"
         android:layout_weight="1"/>
 
 
