@@ -22,10 +22,11 @@ public class MainActivity extends AppCompatActivity {
     public static AppDatabase db;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "main_db").build();
+        db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class, "test04_db").allowMainThreadQueries().build();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

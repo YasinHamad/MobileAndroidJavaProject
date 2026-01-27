@@ -17,6 +17,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
+        android:id="@+id/etName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -30,6 +31,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
+        android:id="@+id/etCourse"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -43,6 +45,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
+        android:id="@+id/etSeat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -56,6 +59,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
+        android:id="@+id/etRoom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -69,6 +73,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
+        android:id="@+id/etExamDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -82,6 +87,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
+        android:id="@+id/etExamStartingTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -95,6 +101,7 @@
         android:textSize="20sp"
         android:textStyle="bold"/>
     <EditText
+        android:id="@+id/etExamDuration"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
@@ -105,6 +112,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primary"
+        android:onClick="InsertExam"
         android:textColor="@color/white"
         android:text="Save"
         android:textSize="20sp"/>
