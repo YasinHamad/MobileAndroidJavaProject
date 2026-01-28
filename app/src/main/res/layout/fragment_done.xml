@@ -12,7 +12,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:layout_marginTop="60dp">
 
         <Button
             android:id="@+id/btn_tasks"
@@ -22,6 +23,7 @@
             android:layout_marginRight="8dp"
             android:text="Tasks"
             app:cornerRadius="0sp"
+            android:textSize="12sp"
             android:backgroundTint="@color/primary"
             android:textColor="@android:color/white" />
 
@@ -33,6 +35,7 @@
             android:layout_marginRight="8dp"
             android:text="Courses"
             app:cornerRadius="0sp"
+            android:textSize="12sp"
             android:backgroundTint="@color/primary"
             android:textColor="@android:color/white" />
 
@@ -44,6 +47,7 @@
             android:layout_marginRight="8dp"
             android:text="Lectures"
             app:cornerRadius="0sp"
+            android:textSize="12sp"
             android:backgroundTint="@color/primary"
             android:textColor="@android:color/white" />
 
@@ -55,26 +59,24 @@
             android:padding="12dp"
             android:text="Exams"
             app:cornerRadius="0sp"
+            android:textSize="12sp"
             android:backgroundTint="@color/primary"
             android:textColor="@android:color/white" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/doneRecView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"/>
-
-    <Button
+    <ImageButton
         android:id="@+id/doneBtnDeleteAll"
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:backgroundTint="@color/danger"
-        android:text="Delete all"
-        android:textSize="12dp"
-        android:padding="0dp"
-        android:layout_gravity="end"
-        />
+        android:src="@drawable/ic_cancel_white"
+        android:layout_gravity="end" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/doneRecView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </LinearLayout>
 

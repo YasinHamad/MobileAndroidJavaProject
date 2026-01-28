@@ -34,12 +34,14 @@ public class DoneCourseAdapter extends RecyclerView.Adapter<DoneCourseAdapter.My
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView courseName;
+        TextView courseTitle;
+        TextView courseDescription;
         ImageView btnCourseDelete;
 
         public MyViewHolder(@NonNull View view) {
             super(view);
-            courseName = view.findViewById(R.id.doneTvCourseName);
+            courseTitle = view.findViewById(R.id.doneTvCourseTitle);
+            courseDescription = view.findViewById(R.id.doneTvCourseDescription);
             btnCourseDelete = view.findViewById(R.id.doneBtnCourseDelete);
         }
     }
@@ -60,7 +62,9 @@ public class DoneCourseAdapter extends RecyclerView.Adapter<DoneCourseAdapter.My
     ) {
         Course course = courseList.get(position);
 
-        holder.courseName.setText(course.title);
+        holder.courseTitle.setText(course.title);
+        holder.courseDescription.setText(course.description);
+
 
         holder.btnCourseDelete.setOnClickListener(v -> {
             int index = holder.getBindingAdapterPosition();
@@ -75,6 +79,6 @@ public class DoneCourseAdapter extends RecyclerView.Adapter<DoneCourseAdapter.My
 
     @Override
     public int getItemCount() {
-        return courseList.size();
+        return courseList == null ? 0 : courseList.size();
     }
 }

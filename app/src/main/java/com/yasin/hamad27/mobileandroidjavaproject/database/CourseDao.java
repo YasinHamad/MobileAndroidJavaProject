@@ -29,6 +29,9 @@ public interface CourseDao {
     @Delete
     void delete(Course course);
 
+    @Query("DELETE FROM COURSE WHERE isDone = 1")
+    void deleteAllDoneCourses();
+
     @Update
     void update(Course course);
 
