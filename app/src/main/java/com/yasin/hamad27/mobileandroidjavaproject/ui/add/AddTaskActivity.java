@@ -33,6 +33,8 @@ public class AddTaskActivity extends AppCompatActivity {
             return insets;
         });
 
+        getSupportActionBar().setTitle("Add Task");
+
         etTitle = findViewById(R.id.etTitle);
         etDescription = findViewById(R.id.etDescription);
         etDate = findViewById(R.id.etTaskDate);

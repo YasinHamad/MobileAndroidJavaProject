@@ -41,6 +41,8 @@ public class AddLectureActivity extends AppCompatActivity {
             return insets;
         });
 
+        getSupportActionBar().setTitle("Add Lecture");
+
         // Initialize views
         initializeViews();
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -40,6 +41,8 @@ public class DoneFragment extends Fragment {
     private DoneExamAdapter examAdapter;
     private ExecutorService executor;
 
+    private int lastClickedButton;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -73,11 +76,18 @@ public class DoneFragment extends Fragment {
 
         currentSection = "tasks";
 
+        // at first the task button will be clicked
+        binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.white));
+        binding.btnTasks.setTextColor(getResources().getColor(R.color.primary));
+        binding.btnTasks.setTypeface(null, Typeface.BOLD);
+        lastClickedButton = 1;
+
         binding.btnTasks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 currentSection = "tasks";
                 recyclerView.setAdapter(taskAdapter);
+                switchColors(1);
                 loadDataFromDb("tasks");
             }
         });
@@ -87,6 +97,7 @@ public class DoneFragment extends Fragment {
             public void onClick(View v) {
                 currentSection = "courses";
                 recyclerView.setAdapter(courseAdapter);
+                switchColors(2);
                 loadDataFromDb("courses");
             }
         });
@@ -96,6 +107,7 @@ public class DoneFragment extends Fragment {
             public void onClick(View v) {
                 currentSection = "lectures";
                 loadDataFromDb("lectures");
+                switchColors(3);
                 recyclerView.setAdapter(lectureAdapter);
             }
         });
@@ -105,6 +117,7 @@ public class DoneFragment extends Fragment {
             public void onClick(View v) {
                 currentSection = "exams";
                 recyclerView.setAdapter(examAdapter);
+                switchColors(4);
                 loadDataFromDb("exams");
             }
         });
@@ -202,4 +215,67 @@ public class DoneFragment extends Fragment {
         binding.btnExams.setWidth(width_to_add + binding.btnExams.getMaxWidth());
         binding.btnLectures.setWidth(width_to_add + binding.btnLectures.getMaxWidth());
     }
+    private void switchColors(int buttonClicked){
+        if(buttonClicked != lastClickedButton){
+            // to switch the clicked button's colors
+            switch (buttonClicked) {
+                case 1: {
+                    binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.white));
+                    binding.btnTasks.setTextColor(getResources().getColor(R.color.primary));
+                    binding.btnTasks.setTypeface(null, Typeface.BOLD);
+                    break;
+                }
+                case 2: {
+                    binding.btnCourses.setBackgroundColor(getResources().getColor(R.color.white));
+                    binding.btnCourses.setTextColor(getResources().getColor(R.color.primary));
+                    binding.btnCourses.setTypeface(null, Typeface.BOLD);
+                    break;
+                }
+                case 3: {
+                    binding.btnLectures.setBackgroundColor(getResources().getColor(R.color.white));
+                    binding.btnLectures.setTextColor(getResources().getColor(R.color.primary));
+                    binding.btnLectures.setTypeface(null, Typeface.BOLD);
+                    break;
+                }
+                case 4: {
+                    binding.btnExams.setBackgroundColor(getResources().getColor(R.color.white));
+                    binding.btnExams.setTextColor(getResources().getColor(R.color.primary));
+                    binding.btnExams.setTypeface(null, Typeface.BOLD);
+                    break;
+                }
+            }
+
+            // to switch the previous clicked button's colors
+            switch (lastClickedButton){
+                case 1:{
+                    binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.primary));
+                    binding.btnTasks.setTextColor(getResources().getColor(R.color.white));
+                    binding.btnTasks.setTypeface(null, Typeface.NORMAL);
+                    break;
+                }
+                case 2:{
+                    binding.btnCourses.setBackgroundColor(getResources().getColor(R.color.primary));
+                    binding.btnCourses.setTextColor(getResources().getColor(R.color.white));
+                    binding.btnCourses.setTypeface(null, Typeface.NORMAL);
+                    break;
+                }
+                case 3:{
+                    binding.btnLectures.setBackgroundColor(getResources().getColor(R.color.primary));
+                    binding.btnLectures.setTextColor(getResources().getColor(R.color.white));
+                    binding.btnLectures.setTypeface(null, Typeface.NORMAL);
+                    break;
+                }
+                case 4:{
+                    binding.btnExams.setBackgroundColor(getResources().getColor(R.color.primary));
+                    binding.btnExams.setTextColor(getResources().getColor(R.color.white));
+                    binding.btnExams.setTypeface(null, Typeface.NORMAL);
+                    break;
+                }
+            }
+
+            lastClickedButton = buttonClicked;
+        }
+
+    }
+
 }

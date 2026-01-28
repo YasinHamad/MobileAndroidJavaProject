@@ -33,6 +33,8 @@ public class AddExamActivity extends AppCompatActivity {
             return insets;
         });
 
+        getSupportActionBar().setTitle("Add Exam");
+
         etName = findViewById(R.id.etName);
         etCourse = findViewById(R.id.etCourse);
         etSeat = findViewById(R.id.etSeat);

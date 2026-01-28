@@ -109,7 +109,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:hint="YYYY-MM-DD"
-                    android:inputType="date"
+
                     android:textSize="20sp" />
 
                 <TextView

@@ -35,6 +35,8 @@ public class AddCourseActivity extends AppCompatActivity {
             return insets;
         });
 
+        getSupportActionBar().setTitle("Add Course");
+
         // Initialize views
         initializeViews();
 
