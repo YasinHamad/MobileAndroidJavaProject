@@ -306,7 +306,7 @@ public class HomeFragment extends Fragment {
     // since the buttons (tasks-lectures-exams-courses) are fixed
     // there will be extra free space on the right
     // this function takes that extra free space, divides by 4, and adds it to the button widths
-    private void optimizeButtonWidths(){
+    private void optimizeButtonWidths() {
         DisplayMetrics display = getResources().getDisplayMetrics();
         int width = display.widthPixels;
 
@@ -314,150 +314,13 @@ public class HomeFragment extends Fragment {
         int buttons_size = binding.btnTasks.getMaxWidth() + binding.btnCourses.getMaxWidth() + binding.btnExams.getMaxWidth() + binding.btnLectures.getMaxWidth();
         int free_space = width - (px_to_remove + buttons_size);
 
-        int width_to_add = free_space/4;
+        int width_to_add = free_space / 4;
 
         binding.btnTasks.setWidth(width_to_add + binding.btnTasks.getMaxWidth());
-        binding.btnCourses.setWidth(width_to_add +binding.btnCourses.getMaxWidth());
+        binding.btnCourses.setWidth(width_to_add + binding.btnCourses.getMaxWidth());
         binding.btnExams.setWidth(width_to_add + binding.btnExams.getMaxWidth());
         binding.btnLectures.setWidth(width_to_add + binding.btnLectures.getMaxWidth());
     }
+}
 
     // the following 6 functions were for testing
-    private void setFakeData(){
-        tasks = new ArrayList<Task>();
-        for(int i = 0; i<20; i++){
-            task = new Task();
-            task.title = "finish the home section";
-            task.description = "each tab should desplay a new recycler view";
-            task.course = "I3350";
-            task.date = "23-12-2025";
-            task.duration = 30;
-            task.startingTime = "12:10 PM";
-            task.type = "reading/searching";
-            tasks.add(task);
-        }
-
-        courses = new ArrayList<Course>();
-        for(int i = 0; i<20; i++){
-            course = new Course();
-            course.title = "I3350";
-            course.description = "This course is very long. It needs a lot of study. But it is very important";
-            courses.add(course);
-        }
-
-        lectures = new ArrayList<Lecture>();
-        for(int i = 0; i<20; i++){
-            lecture = new Lecture();
-            lecture.lectureName = "Database room persistance";
-            lecture.buildingName = "Olom";
-            lecture.roomNumber = "A1";
-            lecture.teacher = "Alaa Aldin";
-            lecture.date = "23-12-2025";
-            lecture.course = "I3350";
-            lecture.startingTime = "9:55 AM";
-            lecture.endingTime = "11:35 AM";
-            lecture.type = "In-Person";
-            lectures.add(lecture);
-        }
-
-        exams = new ArrayList<Exam>();
-        for(int i = 0; i<20; i++){
-            exam = new Exam();
-            exam.course = "I3305";
-            exam.examName = "Final";
-            exam.date = "23-12-2025";
-            exam.roomNumber = "D1";
-            exam.duration = 90;
-            exam.seatNumber = "25";
-            exam.startingTime = "12:00 PM";
-            exams.add(exam);
-        }
-    }
-    private void AddTask(){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                task = new Task();
-                task.title = "finish the home section";
-                task.description = "each tab should desplay a new recycler view";
-                task.course = "I3350";
-                task.date = "23-12-2025";
-                task.duration = 30;
-                task.startingTime = "12:10 PM";
-                task.type = "reading/searching";
-
-                MainActivity.db.taskDao().insert(task);
-            }
-        });
-    }
-    private void AddCourse(){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                course = new Course();
-                course.title = "I3350";
-                course.description = "This course is very long. It needs a lot of study. But it is very important";
-
-                MainActivity.db.courseDao().insert(course);
-            }
-        });
-    }
-    private void AddExam(){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                exam = new Exam();
-                exam.course = "I3305";
-                exam.examName = "Final";
-                exam.date = "23-12-2025";
-                exam.roomNumber = "D1";
-                exam.duration = 90;
-                exam.seatNumber = "25";
-                exam.startingTime = "12:00 PM";
-
-                MainActivity.db.examDao().insert(exam);
-            }
-        });
-    }
-    private void AddLecture(){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                lecture = new Lecture();
-                lecture.lectureName = "Database room persistance";
-                lecture.buildingName = "Olom";
-                lecture.roomNumber = "A1";
-                lecture.teacher = "Alaa Aldin";
-                lecture.date = "23-12-2025";
-                lecture.course = "I3350";
-                lecture.startingTime = "9:55 AM";
-                lecture.endingTime = "11:35 AM";
-                lecture.type = "In-Person";
-
-                MainActivity.db.lectureDao().insert(lecture);
-            }
-        });
-    }
-    private void DeleteTask(int id){
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                MainActivity.db.taskDao().delete(tasks.get(0));
-                MainActivity.db.examDao().delete(exams.get(0));
-                MainActivity.db.lectureDao().delete(lectures.get(0));
-                MainActivity.db.courseDao().delete(courses.get(0));
-            }
-        });
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-}
