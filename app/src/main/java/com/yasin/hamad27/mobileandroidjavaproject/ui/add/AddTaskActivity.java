@@ -3,6 +3,7 @@ package com.yasin.hamad27.mobileandroidjavaproject.ui.add;
 import static com.yasin.hamad27.mobileandroidjavaproject.MainActivity.db;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -49,14 +50,14 @@ public class AddTaskActivity extends AppCompatActivity {
 
     public void InsertTask(View view) {
 
-        String title = etTitle.getText().toString().trim();
-        String description = etDescription.getText().toString().trim();
-        String date = etDate.getText().toString().trim();
-        String startingTime = etStartingTime.getText().toString().trim();
-        String dur = etDuration.getText().toString().trim();
+        String title = etTitle.getText().toString();
+        String description = etDescription.getText().toString();
+        String date = etDate.getText().toString();
+        String startingTime = etStartingTime.getText().toString();
+        String duration = etDuration.getText().toString();
 
-        if (title.isEmpty() || description.isEmpty() || date.isEmpty()
-                || startingTime.isEmpty() || dur.isEmpty()) {
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description) || TextUtils.isEmpty(date)
+                || TextUtils.isEmpty(startingTime) || TextUtils.isEmpty(duration)) {
 
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -73,7 +74,7 @@ public class AddTaskActivity extends AppCompatActivity {
         task.description = description;
         task.date = date;
         task.startingTime = startingTime;
-        task.duration = Integer.parseInt(dur);
+        task.duration = Integer.parseInt(duration);
         task.type = type;
 
         db.taskDao().insert(task);

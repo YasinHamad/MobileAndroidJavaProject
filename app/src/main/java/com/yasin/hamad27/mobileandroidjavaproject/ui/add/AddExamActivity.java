@@ -3,6 +3,7 @@ package com.yasin.hamad27.mobileandroidjavaproject.ui.add;
 import static com.yasin.hamad27.mobileandroidjavaproject.MainActivity.db;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,17 +47,17 @@ public class AddExamActivity extends AppCompatActivity {
 
     public void InsertExam(View view) {
 
-        String name = etName.getText().toString().trim();
-        String course = etCourse.getText().toString().trim();
-        String seat = etSeat.getText().toString().trim();
-        String room = etRoom.getText().toString().trim();
-        String date = etExamDate.getText().toString().trim();
-        String startingTime = etExamStartingTime.getText().toString().trim();
-        String dur = etExamDuration.getText().toString().trim();
+        String name = etName.getText().toString();
+        String course = etCourse.getText().toString();
+        String seat = etSeat.getText().toString();
+        String room = etRoom.getText().toString();
+        String date = etExamDate.getText().toString();
+        String startingTime = etExamStartingTime.getText().toString();
+        String duration = etExamDuration.getText().toString();
 
-        if (name.isEmpty() || course.isEmpty() || seat.isEmpty()
-                || room.isEmpty() || date.isEmpty()
-                || startingTime.isEmpty() || dur.isEmpty()) {
+        if ( TextUtils.isEmpty(name)|| TextUtils.isEmpty(course) || TextUtils.isEmpty(seat)
+                || TextUtils.isEmpty(room) || TextUtils.isEmpty(date)
+                || TextUtils.isEmpty(startingTime)|| TextUtils.isEmpty(duration)) {
 
             Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
@@ -69,7 +70,7 @@ public class AddExamActivity extends AppCompatActivity {
         exam.roomNumber = room;
         exam.date = date;
         exam.startingTime = startingTime;
-        exam.duration = Integer.parseInt(dur);
+        exam.duration = Integer.parseInt(duration);
 
         db.examDao().insert(exam);
 
