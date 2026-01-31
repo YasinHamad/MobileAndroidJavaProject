@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
-import com.yasin.hamad27.mobileandroidjavaproject.database.Exam;
 import com.yasin.hamad27.mobileandroidjavaproject.database.Lecture;
 
 import java.util.List;
@@ -32,9 +30,10 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public final TextView textView_lecture_title, textView_lecture_building_name, textView_lecture_room_number,
-                textView_lecture_type, textView_lecture_date, textView_lecture_starting_time,
-                textView_lecture_ending_time, textView_lecture_course, textView_lecture_teacher;
+        public final TextView textView_lecture_title, textView_lecture_building_name,
+                textView_lecture_room_number, textView_lecture_type, textView_lecture_date,
+                textView_lecture_starting_time, textView_lecture_ending_time,
+                textView_lecture_course, textView_lecture_teacher;
 
         public final ImageButton button_lecture_done, button_lecture_delete;
 
@@ -70,6 +69,8 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHold
                     });
                 }
             });
+
+
             button_lecture_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -79,25 +80,23 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHold
                         public void run() {
                             int index = getBindingAdapterPosition();
                             Lecture lecture = lectures.get(index);
-                            lecture.isDone = true;
 
                             MainActivity.db.lectureDao().delete(lecture);
                         }
                     });
                 }
             });
-
         }
     }
-
 
     @Override
     public LectureAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_lecture, parent, false);
         return new LectureAdapter.ViewHolder(view);
     }
+
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull LectureAdapter.ViewHolder holder, int position) {
         Lecture currentLecture = lectures.get(position);
 
         holder.textView_lecture_title.setText(currentLecture.lectureName);
@@ -109,38 +108,7 @@ public class LectureAdapter extends RecyclerView.Adapter<LectureAdapter.ViewHold
         holder.textView_lecture_ending_time.setText(currentLecture.endingTime);
         holder.textView_lecture_course.setText(currentLecture.course);
         holder.textView_lecture_teacher.setText(currentLecture.teacher);
-
-        // Add delete button functionality
-        holder.button_lecture_delete.setOnClickListener(v -> {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.execute(() -> {
-                MainActivity.db.lectureDao().delete(currentLecture);
-            });
-            executor.shutdown();
-        });
-
-        // Add done button functionality
-        holder.button_lecture_done.setOnClickListener(v -> {
-            currentLecture.isDone = true;
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.execute(() -> {
-                MainActivity.db.lectureDao().update(currentLecture);
-            });
-            executor.shutdown();
-        });
     }
-    /**@Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.textView_lecture_title.setText(lectures.get(position).lectureName);
-        holder.textView_lecture_building_name.setText(lectures.get(position).buildingName);
-        holder.textView_lecture_room_number.setText(lectures.get(position).roomNumber);
-        holder.textView_lecture_type.setText(lectures.get(position).type);
-        holder.textView_lecture_date.setText(lectures.get(position).date);
-        holder.textView_lecture_starting_time.setText(lectures.get(position).startingTime);
-        holder.textView_lecture_ending_time.setText(lectures.get(position).endingTime);
-        holder.textView_lecture_course.setText(lectures.get(position).course);
-        holder.textView_lecture_teacher.setText(lectures.get(position).teacher);
-    }**/
 
     @Override
     public int getItemCount() {

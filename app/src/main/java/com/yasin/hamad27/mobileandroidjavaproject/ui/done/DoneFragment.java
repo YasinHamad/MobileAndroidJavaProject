@@ -76,7 +76,7 @@ public class DoneFragment extends Fragment {
 
         currentSection = "tasks";
 
-        // at first the task button will be clicked
+
         binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.white));
         binding.btnTasks.setTextColor(getResources().getColor(R.color.primary));
         binding.btnTasks.setTypeface(null, Typeface.BOLD);
@@ -167,7 +167,7 @@ public class DoneFragment extends Fragment {
     }
 
 
-    // 🔹 Load data from DB depending on current section
+
     private void loadDataFromDb(String section) {
         switch (section) {
             case "tasks":
@@ -197,9 +197,7 @@ public class DoneFragment extends Fragment {
     }
 
 
-    // since the buttons (tasks-lectures-exams-courses) are fixed
-    // there will be extra free space on the right
-    // this function takes that extra free space, divides by 4, and adds it to the button widths
+
     private void optimizeButtonWidths() {
         DisplayMetrics display = getResources().getDisplayMetrics();
         int width = display.widthPixels;
@@ -217,7 +215,7 @@ public class DoneFragment extends Fragment {
     }
     private void switchColors(int buttonClicked){
         if(buttonClicked != lastClickedButton){
-            // to switch the clicked button's colors
+
             switch (buttonClicked) {
                 case 1: {
                     binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.white));
@@ -245,7 +243,7 @@ public class DoneFragment extends Fragment {
                 }
             }
 
-            // to switch the previous clicked button's colors
+
             switch (lastClickedButton){
                 case 1:{
                     binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.primary));

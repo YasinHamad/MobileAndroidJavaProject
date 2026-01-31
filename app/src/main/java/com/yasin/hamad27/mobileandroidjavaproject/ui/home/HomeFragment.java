@@ -51,7 +51,7 @@ public class HomeFragment extends Fragment {
     private boolean isTheLayoutLinear;
     private int lastClickedButton;
 
-    /* this is to test adapters - I will add the database later */
+
     List<Task> tasks;
     Task task;
 
@@ -85,7 +85,6 @@ public class HomeFragment extends Fragment {
 
         optimizeButtonWidths();
 
-        // at first the task button will be clicked
         binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.white));
         binding.btnTasks.setTextColor(getResources().getColor(R.color.primary));
         binding.btnTasks.setTypeface(null, Typeface.BOLD);
@@ -95,53 +94,12 @@ public class HomeFragment extends Fragment {
 
         setButtonListeners();
 
-        // click the task button when loading the home fragment
-        // inorder to retrive the tasks from the db
-        // then the user can click the button they want
+
         binding.btnTasks.performClick();
-
-        /**AddCourse();
-        AddExam();
-        AddTask();
-        AddLecture();**/
     }
 
-    /**void setObserversForAllTables(){
-        MainActivity.db.taskDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Task>>() {
-            @Override
-            public void onChanged(List<Task> tasks) {
-                taskAdapter = new TaskAdapter(tasks, (MainActivity)getContext());
-                binding.btnTasks.performClick();
-            }
-        });
-
-        MainActivity.db.examDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Exam>>() {
-            @Override
-            public void onChanged(List<Exam> exams) {
-                examAdapter = new ExamAdapter(exams, (MainActivity)getContext());
-                binding.btnExams.performClick();
-            }
-        });
-
-        MainActivity.db.lectureDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Lecture>>() {
-            @Override
-            public void onChanged(List<Lecture> lectures) {
-                lectureAdapter = new LectureAdapter(lectures, (MainActivity)getContext());
-                binding.btnLectures.performClick();
-            }
-        });
-
-        MainActivity.db.courseDao().getAll(false).observe((MainActivity)getContext(), new Observer<List<Course>>() {
-            @Override
-            public void onChanged(List<Course> courses) {
-                courseAdapter = new CourseAdapter(courses , (MainActivity)getContext());
-                binding.btnCourses.performClick();
-            }
-        });
-    }
-**/
     void setObserversForAllTables(){
-        // Tasks Observer
+
         MainActivity.db.taskDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Task>>() {
             @Override
             public void onChanged(List<Task> tasks) {
@@ -154,7 +112,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Courses Observer
         MainActivity.db.courseDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Course>>() {
             @Override
             public void onChanged(List<Course> courses) {
@@ -166,8 +123,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
-        // Lectures Observer
         MainActivity.db.lectureDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Lecture>>() {
             @Override
             public void onChanged(List<Lecture> lectures) {
@@ -180,7 +135,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        // Exams Observer
+
         MainActivity.db.examDao().getAll(false).observe(getViewLifecycleOwner(), new Observer<List<Exam>>() {
             @Override
             public void onChanged(List<Exam> exams) {
@@ -242,7 +197,7 @@ public class HomeFragment extends Fragment {
 
     private void switchColors(int buttonClicked){
         if(buttonClicked != lastClickedButton){
-            // to switch the clicked button's colors
+
             switch (buttonClicked) {
                 case 1: {
                     binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.white));
@@ -270,7 +225,7 @@ public class HomeFragment extends Fragment {
                 }
             }
 
-            // to switch the previous clicked button's colors
+
             switch (lastClickedButton){
                 case 1:{
                     binding.btnTasks.setBackgroundColor(getResources().getColor(R.color.primary));
@@ -303,9 +258,7 @@ public class HomeFragment extends Fragment {
 
     }
 
-    // since the buttons (tasks-lectures-exams-courses) are fixed
-    // there will be extra free space on the right
-    // this function takes that extra free space, divides by 4, and adds it to the button widths
+
     private void optimizeButtonWidths() {
         DisplayMetrics display = getResources().getDisplayMetrics();
         int width = display.widthPixels;
@@ -323,4 +276,4 @@ public class HomeFragment extends Fragment {
     }
 }
 
-    // the following 6 functions were for testing
+

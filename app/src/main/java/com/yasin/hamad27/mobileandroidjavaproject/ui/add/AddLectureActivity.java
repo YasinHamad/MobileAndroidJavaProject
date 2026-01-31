@@ -1,5 +1,7 @@
 package com.yasin.hamad27.mobileandroidjavaproject.ui.add;
 
+import static com.yasin.hamad27.mobileandroidjavaproject.MainActivity.db;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import android.text.TextUtils;
 
 import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
@@ -43,10 +46,9 @@ public class AddLectureActivity extends AppCompatActivity {
 
         getSupportActionBar().setTitle("Add Lecture");
 
-        // Initialize views
+
         initializeViews();
 
-        // Set up save button click listener
         buttonSaveLecture.setOnClickListener(v -> saveLecture());
     }
 
@@ -66,7 +68,7 @@ public class AddLectureActivity extends AppCompatActivity {
     }
 
     private void saveLecture() {
-        // Get input values
+
         String lectureName = editTextLectureName.getText().toString().trim();
         String buildingName = editTextBuildingName.getText().toString().trim();
         String roomNumber = editTextRoomNumber.getText().toString().trim();
@@ -76,7 +78,6 @@ public class AddLectureActivity extends AppCompatActivity {
         String startingTime = editTextStartingTime.getText().toString().trim();
         String endingTime = editTextEndingTime.getText().toString().trim();
 
-        // Get attendance type from radio buttons
         int selectedRadioId = radioGroupAttendance.getCheckedRadioButtonId();
         String attendanceType = "";
         if (selectedRadioId == R.id.radioInPerson) {
@@ -85,38 +86,15 @@ public class AddLectureActivity extends AppCompatActivity {
             attendanceType = "Online";
         }
 
-        // Validate required fields
-        if (lectureName.isEmpty()) {
-            Toast.makeText(this, "Please enter lecture name", Toast.LENGTH_SHORT).show();
-            editTextLectureName.requestFocus();
+        if (TextUtils.isEmpty(lectureName) || TextUtils.isEmpty(buildingName)
+                || TextUtils.isEmpty(roomNumber) || TextUtils.isEmpty(teacher)
+                || TextUtils.isEmpty(course) || TextUtils.isEmpty(date)
+                || TextUtils.isEmpty(startingTime) || TextUtils.isEmpty(endingTime)) {
+
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (course.isEmpty()) {
-            Toast.makeText(this, "Please enter course name", Toast.LENGTH_SHORT).show();
-            editTextCourse.requestFocus();
-            return;
-        }
-
-        if (date.isEmpty()) {
-            Toast.makeText(this, "Please enter date", Toast.LENGTH_SHORT).show();
-            editTextDate.requestFocus();
-            return;
-        }
-
-        if (startingTime.isEmpty()) {
-            Toast.makeText(this, "Please enter starting time", Toast.LENGTH_SHORT).show();
-            editTextStartingTime.requestFocus();
-            return;
-        }
-
-        if (endingTime.isEmpty()) {
-            Toast.makeText(this, "Please enter ending time", Toast.LENGTH_SHORT).show();
-            editTextEndingTime.requestFocus();
-            return;
-        }
-
-        // Create Lecture object
         Lecture lecture = new Lecture();
         lecture.lectureName = lectureName;
         lecture.buildingName = buildingName;
@@ -128,31 +106,8 @@ public class AddLectureActivity extends AppCompatActivity {
         lecture.endingTime = endingTime;
         lecture.type = attendanceType;
         lecture.isDone = false;
-
-        // Insert into database in background thread
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            try {
-                MainActivity.db.lectureDao().insert(lecture);
-
-                // Show success message on UI thread
-                runOnUiThread(() -> {
-                    Toast.makeText(AddLectureActivity.this,
-                            "Lecture saved successfully!",
-                            Toast.LENGTH_SHORT).show();
-                    // Close activity and go back
-                    finish();
-                });
-            } catch (Exception e) {
-                // Show error message on UI thread
-                runOnUiThread(() -> {
-                    Toast.makeText(AddLectureActivity.this,
-                            "Error saving lecture: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
-                });
-            }
-        });
-
-        executor.shutdown();
+        db.lectureDao().insert(lecture);
+        Toast.makeText(this, "Lecture inserted successfully", Toast.LENGTH_SHORT).show();
+        finish();
     }
 }

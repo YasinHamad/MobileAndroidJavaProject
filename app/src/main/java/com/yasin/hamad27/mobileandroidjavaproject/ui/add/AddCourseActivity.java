@@ -1,5 +1,7 @@
 package com.yasin.hamad27.mobileandroidjavaproject.ui.add;
 
+import static com.yasin.hamad27.mobileandroidjavaproject.MainActivity.db;
+
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import android.text.TextUtils;
 
 import com.yasin.hamad27.mobileandroidjavaproject.MainActivity;
 import com.yasin.hamad27.mobileandroidjavaproject.R;
@@ -36,11 +39,8 @@ public class AddCourseActivity extends AppCompatActivity {
         });
 
         getSupportActionBar().setTitle("Add Course");
-
-        // Initialize views
         initializeViews();
 
-        // Set up save button click listener
         buttonSaveCourse.setOnClickListener(v -> saveCourse());
     }
 
@@ -51,54 +51,24 @@ public class AddCourseActivity extends AppCompatActivity {
     }
 
     private void saveCourse() {
-        // Get input values
+
         String title = editTextCourseTitle.getText().toString().trim();
         String description = editTextCourseDescription.getText().toString().trim();
 
-        // Validate required fields
-        if (title.isEmpty()) {
-            Toast.makeText(this, "Please enter course title", Toast.LENGTH_SHORT).show();
-            editTextCourseTitle.requestFocus();
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(description)) {
+            Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (description.isEmpty()) {
-            Toast.makeText(this, "Please enter course description", Toast.LENGTH_SHORT).show();
-            editTextCourseDescription.requestFocus();
-            return;
-        }
 
-        // Create Course object
         Course course = new Course();
         course.title = title;
         course.description = description;
         course.isDone = false;
-
-        // Insert into database in background thread
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            try {
-                MainActivity.db.courseDao().insert(course);
-
-                // Show success message on UI thread
-                runOnUiThread(() -> {
-                    Toast.makeText(AddCourseActivity.this,
-                            "Course saved successfully!",
-                            Toast.LENGTH_SHORT).show();
-
-                    // Close activity and go back
-                    finish();
-                });
-            } catch (Exception e) {
-                // Show error message on UI thread
-                runOnUiThread(() -> {
-                    Toast.makeText(AddCourseActivity.this,
-                            "Error saving course: " + e.getMessage(),
-                            Toast.LENGTH_LONG).show();
-                });
-            }
-        });
-
-        executor.shutdown();
+        db.courseDao().insert(course);
+        Toast.makeText(this, "Course inserted successfully", Toast.LENGTH_SHORT).show();
+        finish();
     }
-}
+
+
+    }

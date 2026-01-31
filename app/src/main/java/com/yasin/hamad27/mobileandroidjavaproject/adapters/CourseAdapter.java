@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -61,6 +60,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                 }
             });
 
+            // DELETE BUTTON - deletes course from database
             button_course_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,19 +70,14 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
                         public void run() {
                             int index = getBindingAdapterPosition();
                             Course course = courses.get(index);
-                            course.isDone = true;
 
                             MainActivity.db.courseDao().delete(course);
                         }
                     });
                 }
             });
-
-
-
         }
     }
-
 
     @Override
     public CourseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -90,41 +85,16 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
         return new CourseAdapter.ViewHolder(view);
     }
 
-   /** @Override
-    public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
-        holder.textView_course_title.setText(courses.get(position).title);
-        holder.textView_course_description.setText(courses.get(position).description);
-
-    }**/
-
-    @Override
-    public int getItemCount() {
-        return courses.size();
-    }
     @Override
     public void onBindViewHolder(@NonNull CourseAdapter.ViewHolder holder, int position) {
         Course currentCourse = courses.get(position);
 
         holder.textView_course_title.setText(currentCourse.title);
         holder.textView_course_description.setText(currentCourse.description);
+    }
 
-        // Add delete button functionality
-        holder.button_course_delete.setOnClickListener(v -> {
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.execute(() -> {
-                MainActivity.db.courseDao().delete(currentCourse);
-            });
-            executor.shutdown();
-        });
-
-        // Add done button functionality
-        holder.button_course_done.setOnClickListener(v -> {
-            currentCourse.isDone = true;
-            ExecutorService executor = Executors.newSingleThreadExecutor();
-            executor.execute(() -> {
-                MainActivity.db.courseDao().update(currentCourse);
-            });
-            executor.shutdown();
-        });
+    @Override
+    public int getItemCount() {
+        return courses.size();
     }
 }
